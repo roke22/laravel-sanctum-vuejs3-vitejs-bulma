@@ -1,12 +1,3 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
 ## Laravel + sanctum + ui + Vuejs + Vuetify
 
 Esta instalación de laravel tiene instalado en la carpeta de front-end vuejs y configurado para que se exporte su build a la carpeta public copiando el index.php original de laravel.
@@ -50,7 +41,7 @@ Puedes seguir todos los pasos o bien clonar este repositorio
     }
     })->where('any', '.*');
 ```
-3. Instalar el paquete Sanctum de laravel https://laravel.com/docs/7.x/sanctum
+3. Instalar elpaquete Sanctum de laravel https://laravel.com/docs/7.x/sanctum
 4. Añadir la variable SESSION_DOMAIN con el nombre del dominio para las cookies en el fichero .env
 5. Añadir la variable SANCTUM_STATEFUL_DOMAINS con los nombres de dominio de confianza, si son varios se separan por comas
 6. Cambiar en .env la variable 
@@ -90,73 +81,86 @@ Puedes seguir todos los pasos o bien clonar este repositorio
 
 12. Crear las vistas para utilizar las rutas creadas anteriormente a traves de la api y asi poder logear, registrar y recuperar cuentas
 
-## About Laravel
+## ENGLISH VERSION
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Laravel + sanctum + ui + Vuejs + Vuetify
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This laravel installation has vuejs installed in the front-end folder and configured so that its build is exported to the public folder by copying the original index.php of laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+In this way Laravel and Vuejs are completely separated
 
-## Learning Laravel
+The front-end folder can be treated as a separate Vuejs project, this way you can separate it without fear from laravel to have the front-end and backend on different servers and scale them separately
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## How do I make Laravel + sanctum + ui + Vuejs + Vuetify work?
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Execute the following commands in the root directory:
+```
+        composer install
+        npm install
+        php artisan migrate
+```
+2. In the front-end directory run the following commands:
+```
+        composer install
+```
+3. To compile the views in Vuejs and copy them to the public folder, execute:
+```
+        npm run dev
+```
 
-## Laravel Sponsors
+## What has been done to achieve this?
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+If you want to do it on your own, here is a guide on how to install this template from laravel + sanctum + ui + vuejs + vuetifyjs
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+You can follow all the steps or clone this repository
 
-## Contributing
+1. Install laravel
+2. Edit the web routes file and add as the only route, this will make all the web requests other than / api be served by Vuejs instead of laravel
+```
+    Route::any('/{any}', function () {
+    try {
+        $index = Storage::disk('website')->get('index.html');
+        return $index;
+    } catch (FileNotFoundException $exception) {
+        return 'Missing front-end build';
+    }
+    })->where('any', '.*');
+```
+3. Install the laravel Sanctum package https://laravel.com/docs/7.x/sanctum
+4. Add the SESSION_DOMAIN variable with the domain name for the cookies in the .env file
+5. Add the variable SANCTUM_STATEFUL_DOMAINS with the trusted domain names, if there are several they are separated by commas
+6. Change the variable in .env
+```
+        SESSION_DRIVER=cookie
+```
+7. Modify the config/cors.php file so that the path variable is:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+        paths' => [
+                'api/*',
+                '/login',
+                '/logout',
+                '/sanctum/csrf-cookie'
+            ]
+```
+8. Modify the config/cors.php file
+```     
+        'supports_credentials' => true 
+```
+9. Modify the routes file api.php so that it has the following code
+```
+        Route::post('login', 'Auth\LoginController@login');
+        Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+        Route::post('register', 'Auth\RegisterController@register');
+        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-## Code of Conduct
+        Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+            return $request->user();
+        });
+```
+10. Follow the manual for the vue part of https://blog.codecourse.com/setting-up-laravel-sanctum-airlock-for-spa-authentication-with-vue/
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+11. Modify the necessary data in the .env file and in the 'front-end / src / auth.js' file the url of your endpoint to which you will make the requests with vuejs. Remember that if you want to receive the password reset email you must have a valid smtp server configured
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+12. Create the views to use the routes previously created through the api and thus be able to log, register and recover accounts
