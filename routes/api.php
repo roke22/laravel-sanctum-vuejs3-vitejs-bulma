@@ -14,18 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('register', 'Auth\RegisterController@register');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::post('/user', [App\Http\Controllers\Auth\CreateUserController::class, 'create'])->name('users.create');
+Route::middleware('web')->post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('users.login');
+Route::middleware('web')->get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('users.logout');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->any('/{any}', function (Request $request) {
-    dd("SOY API");
-    return $request->user();
-})->where('any', '.*');
-
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});

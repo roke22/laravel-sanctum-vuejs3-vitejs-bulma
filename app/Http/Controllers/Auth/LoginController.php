@@ -1,40 +1,73 @@
 <?php
-
+ 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
+     * Handle an authentication attempt.
      *
-     * @var string
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function login(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        $validator = Validator::make([
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'remember' => $request->input('remember', false)
+        ], 
+        [
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'remember' => ['boolean']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'data' => [],
+                'errors' => $validator->errors()->all()
+            ]);
+        }
+
+        if (Auth::attempt($request->only(['email', 'password'], $request->input('remember', false)))) {
+            $user = User::find(Auth::id());
+            $request->session()->regenerate();
+
+            return response()->json([
+                'data' => [
+                    'user' => $user,
+                ]
+            ], 200);  
+        }
+
+        return response([
+            'errors' => ['You have entered an invalid email or password.'],
+        ], 401);
+    }
+
+    /**
+     * Handle logout
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+    
+        $request->session()->regenerateToken();
+    
+        return response([], 200);
     }
 }

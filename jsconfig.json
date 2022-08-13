@@ -1,0 +1,21 @@
+//This file is for vscode, helps to find routes from imports
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+        "@/*": [
+            "public-dev/node_modules/*"
+        ],
+        "@Components/*": [
+            "public-dev/src/componentsjs/*"
+        ],
+        "@views/*": [
+            "public-dev/src/views/*"
+        ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "public"
+    ]
+}
