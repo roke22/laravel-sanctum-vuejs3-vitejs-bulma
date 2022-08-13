@@ -22,5 +22,16 @@ export default defineConfig({
   server: {
     host: urlDev,
     port: 8000,
+    // Api and Sanctum endpoints must be redirected to backend
+    // Backend is working with port 80 with nginx in docker
+    // Frontend works with 8000 with Vitejs Server
+    proxy: {
+      '/api': {
+        target: 'http://desarrollo.zataca.com'
+      },
+      '/sanctum': {
+        target: env.APP_URL
+      }
+    }
   }
 })

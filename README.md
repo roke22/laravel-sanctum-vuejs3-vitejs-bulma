@@ -25,7 +25,12 @@
     
     3. Instead of modifying the sanctum config file, we add the SANCTUM_STATEFUL_DOMAINS variable to the env to have greater visibility
     
-    4. We modify in the env SESSION_DRIVER=cookie
+    4. We modify in the env 
+            SESSION_DRIVER=cookie
+            SESSION_DOMAIN=.domain.com
+            SANCTUM_STATEFUL_DOMAINS=your.domain.com:8000,your.domain.com
+
+       In SANCTUM_STATEFUL_DOMAINS we put both because Vitejs use the port 8000 for frontend development so we ensure that both are trusted
 
 ### Frontend
     1. Install vitejs with the command:
@@ -82,7 +87,12 @@
     
     3. En lugar de modificar el fichero config de sanctum añadimos en el env la variable SANCTUM_STATEFUL_DOMAINS para tener mayor visibilidad
     
-    4. Modificamos en el env SESSION_DRIVER=cookie
+    4. Modificamos en el env 
+            SESSION_DRIVER=cookie
+            SESSION_DOMAIN=.domain.com
+            SANCTUM_STATEFUL_DOMAINS=your.domain.com:8000,your.domain.com
+
+       En SANCTUM_STATEFUL_DOMAINS ponemos ambos porque Vitejs use el puerto 8000 para el desarrollo del frontend asi nos aseguramos que funcionan
 
 ### Frontend
     1. Instalamos vitejs con el comando: 
