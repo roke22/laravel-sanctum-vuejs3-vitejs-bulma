@@ -1,9 +1,8 @@
 <?php
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +23,3 @@ Route::any('/{any}', function () {
         return 'Missing front-end build';
     }
 })->where('any', '.*');
-
-Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');

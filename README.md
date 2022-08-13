@@ -1,166 +1,111 @@
-## Laravel + sanctum + ui + Vuejs + Vuetify
+# Laravel 9 + Sanctum + Vuejs 3 + TS + Vite + Bulma.io
 
-Esta instalación de laravel tiene instalado en la carpeta de front-end vuejs y configurado para que se exporte su build a la carpeta public copiando el index.php original de laravel.
+## What packages have been used?
+## Backend
+### Laravel 9 https://laravel.com/
+    PHP Framework that made easy the development
+### Laravel Sanctum https://laravel.com/docs/9.x/sanctum
 
-De esta forma estan completamente separados Laravel y Vuejs
+    Laravel Sanctum provides a featherweight authentication system for SPAs (single page applications), mobile applications, and simple, token based APIs
+    
+## Frontend
 
-La carpeta de front-end puedes tratarla como un proyecto de Vuejs independiente, de esta forma puedes separarla sin miedo de laravel para tener el front-end y backend en diferentes servidores y escalarlos por separado
+### Vite https://vitejs.dev/
+    Development environment that allows us to see the changes we make in the frontend in real time, among many other things.
 
-## ¿Como hago funcionar Laravel + sanctum + ui + Vuejs + Vuetify?
+### Vuejs 3 https://vuejs.org/
+    Vuejs 3 Javascript Framework
 
-1. Ejecuta en el directorio raiz los siguientes comandos:
-```
-        composer install
-        npm install
-        php artisan migrate
-```
-2. En el directorio front-end ejecuta los siguientes comandos:
-```
-        composer install
-```
-3. Para compilar las vistas en Vuejs y que se copie en la carpeta public ejecuta:
-```
-        npm run dev
-```
+## What have we done to make it work?
 
-## ¿Que se ha hecho para conseguir esto?
+### Backend
+    1. Install laravel 9 and laravel sanctum
+    
+    2. We configure sanctum as indicated in https://laravel.com/docs/9.x/sanctum#spa-authentication
+    
+    3. Instead of modifying the sanctum config file, we add the SANCTUM_STATEFUL_DOMAINS variable to the env to have greater visibility
+    
+    4. We modify in the env SESSION_DRIVER=cookie
 
-Si quieres hacerlo por tu cuenta aqui tienes una guia de como se ha conseguido instalar esta plantilla de laravel + sanctum + ui + vuejs + vuetifyjs
+### Frontend
+    1. Install vitejs with the command:
+        npm create vite@latest public-dev --template vue
 
-Puedes seguir todos los pasos o bien clonar este repositorio 
+    2. Install vue-router with the command "npm install vue-router@4 --save"
+       Ahora importamos vue-router en el fichero "public-dev/src/main.ts"
 
-1. Instalar laravel
-2. Editar el fichero de rutas web y añadir como unica ruta, esto hara que todas las peticiones web que no sean /api sean atendidas por Vuejs en lugar de laravel
-```
-    Route::any('/{any}', function () {
-    try {
-        $index = Storage::disk('website')->get('index.html');
-        return $index;
-    } catch (FileNotFoundException $exception) {
-        return 'Missing front-end build';
-    }
-    })->where('any', '.*');
-```
-3. Instalar elpaquete Sanctum de laravel https://laravel.com/docs/7.x/sanctum
-4. Añadir la variable SESSION_DOMAIN con el nombre del dominio para las cookies en el fichero .env
-5. Añadir la variable SANCTUM_STATEFUL_DOMAINS con los nombres de dominio de confianza, si son varios se separan por comas
-6. Cambiar en .env la variable 
-```
-        SESSION_DRIVER=cookie
-```
-7. Modificar el fichero config/cors.php para que la variable path sea:
-```
-        paths' => [
-                'api/*',
-                '/login',
-                '/logout',
-                '/sanctum/csrf-cookie'
-            ]
-```
-8. Modificar el fichero config/cors.php
-```     
-        'supports_credentials' => true 
-```
+    3. We install fontawesome with the commands:
+        npm i --save @fortawesome/fontawesome-svg-core
+        npm i --save @fortawesome/free-solid-svg-icons
+        npm i --save @fortawesome/free-regular-svg-icons\n
+        npm i --save @fortawesome/free-brands-svg-icons
+        npm i --save @fortawesome/vue-fontawesome@latest-3
 
-9. Modificar el fichero de rutas api.php para que quede con el siguiente codigo
-```
-        Route::post('login', 'Auth\LoginController@login');
-        Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-        Route::post('register', 'Auth\RegisterController@register');
-        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-        Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+       Now we import fontawesome in the file "public-dev/src/main.ts"
+    
+    4. Install axios for api requests with the command "npm install axios --save"
+    
+        We import axios by creating the file "public-dev/src/plugins/api.ts" which we then import into "/public-dev/src/main.ts"
 
-        Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-            return $request->user();
-        });
-```
+    5. We include bulma.io, in the folder "public-dev/src/assets" we are going to copy the file bulma.css and bulma.css.map and import the file in "public-dev/src/main.ts" (https://github.com/jgthms/bulma/tree/master/css)
 
-10. Seguir el manual para la parte de vue de https://blog.codecourse.com/setting-up-laravel-sanctum-airlock-for-spa-authentication-with-vue/
+    6. To avoid csrf token errors and unwritable cookies we are going to configure the vitejs development environment to use the same domain as the backend.
 
-11. Modificar en el fichero .env los datos necesarios y en el fichero 'front-end/src/auth.js' la url de tu endpoint al que haras las peticiones con vuejs. Recuerda que si quieres recibir el correo del reinicio de contraseña debes tener un servidor smtp valido configurado
+       For this we will modify the file "public-dev/vite.config.ts", all the modifications have been commented to understand them
 
-12. Crear las vistas para utilizar las rutas creadas anteriormente a traves de la api y asi poder logear, registrar y recuperar cuentas
+# SPANISH
 
-## ENGLISH VERSION
+# Laravel 9 + Sanctum + Vuejs 3 + TS + Vite + Bulma.io 
 
-## Laravel + sanctum + ui + Vuejs + Vuetify
+## ¿ Que paquetes se han utilizado ?
+## Backend
+### Laravel 9 https://laravel.com/
+    PHP Framework que nos facilitara el desarrollo de nuestro backend
+### Laravel Sanctum https://laravel.com/docs/9.x/sanctum
 
-This laravel installation has vuejs installed in the front-end folder and configured so that its build is exported to the public folder by copying the original index.php of laravel.
+    Paquete que gestiona los tokens, sesión basada en cookie y CSRF que nos ayudara a gestionar la autenticación
+    
+## Frontend
 
-In this way Laravel and Vuejs are completely separated
+### Vite https://vitejs.dev/
+    Entorno de desarrollo que nos permite ver los cambios que hacemos en el frontend en tiempo real entre otras muchas cosas.
 
-The front-end folder can be treated as a separate Vuejs project, this way you can separate it without fear from laravel to have the front-end and backend on different servers and scale them separately
+### Vuejs 3 https://vuejs.org/
+    Vuejs 3 Javascript Framework
 
-## How do I make Laravel + sanctum + ui + Vuejs + Vuetify work?
+## ¿Que hemos hecho para hacerlo funcionar?
 
-1. Execute the following commands in the root directory:
-```
-        composer install
-        npm install
-        php artisan migrate
-```
-2. In the front-end directory run the following commands:
-```
-        composer install
-```
-3. To compile the views in Vuejs and copy them to the public folder, execute:
-```
-        npm run dev
-```
+### Backend
+    1. Instalar laravel 9 y laravel sanctum
+    
+    2. Configuramos sanctum tal y como indican en https://laravel.com/docs/9.x/sanctum#spa-authentication 
+    
+    3. En lugar de modificar el fichero config de sanctum añadimos en el env la variable SANCTUM_STATEFUL_DOMAINS para tener mayor visibilidad
+    
+    4. Modificamos en el env SESSION_DRIVER=cookie
 
-## What has been done to achieve this?
+### Frontend
+    1. Instalamos vitejs con el comando: 
+        npm create vite@latest public-dev --template vue
 
-If you want to do it on your own, here is a guide on how to install this template from laravel + sanctum + ui + vuejs + vuetifyjs
+    2. Instalamos vue-router con el comando "npm install vue-router@4 --save"
+       Ahora importamos vue-router en el fichero "public-dev/src/main.ts"
 
-You can follow all the steps or clone this repository
+    3. Instalamos fontawesome con los comandos:
+        npm i --save @fortawesome/fontawesome-svg-core
+        npm i --save @fortawesome/free-solid-svg-icons
+        npm i --save @fortawesome/free-regular-svg-icons\n
+        npm i --save @fortawesome/free-brands-svg-icons
+        npm i --save @fortawesome/vue-fontawesome@latest-3
 
-1. Install laravel
-2. Edit the web routes file and add as the only route, this will make all the web requests other than / api be served by Vuejs instead of laravel
-```
-    Route::any('/{any}', function () {
-    try {
-        $index = Storage::disk('website')->get('index.html');
-        return $index;
-    } catch (FileNotFoundException $exception) {
-        return 'Missing front-end build';
-    }
-    })->where('any', '.*');
-```
-3. Install the laravel Sanctum package https://laravel.com/docs/7.x/sanctum
-4. Add the SESSION_DOMAIN variable with the domain name for the cookies in the .env file
-5. Add the variable SANCTUM_STATEFUL_DOMAINS with the trusted domain names, if there are several they are separated by commas
-6. Change the variable in .env
-```
-        SESSION_DRIVER=cookie
-```
-7. Modify the config/cors.php file so that the path variable is:
+       Ahora importamos fontawesome en el fichero "public-dev/src/main.ts"
+    
+    4. Instalar axios para las peticiones a la api con el comando "npm install axios --save"
+    
+        Importamos axios creando el fichero "public-dev/src/plugins/api.ts" que luego importamos en "/public-dev/src/main.ts"
 
-```
-        paths' => [
-                'api/*',
-                '/login',
-                '/logout',
-                '/sanctum/csrf-cookie'
-            ]
-```
-8. Modify the config/cors.php file
-```     
-        'supports_credentials' => true 
-```
-9. Modify the routes file api.php so that it has the following code
-```
-        Route::post('login', 'Auth\LoginController@login');
-        Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-        Route::post('register', 'Auth\RegisterController@register');
-        Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-        Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+    5. Incluimos bulma.io, en la carpeta "public-dev/src/assets" vamos a copiar el fichero bulma.css y bulma.css.map e importamos el fichero en "public-dev/src/main.ts" (https://github.com/jgthms/bulma/tree/master/css)
 
-        Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-            return $request->user();
-        });
-```
-10. Follow the manual for the vue part of https://blog.codecourse.com/setting-up-laravel-sanctum-airlock-for-spa-authentication-with-vue/
+    6. Para evitar errores de csrf token y cookies que no pueden escribirse vamos a configurar el entorno de desarrollo de vitejs para usar el mismo dominio que el backend.
 
-11. Modify the necessary data in the .env file and in the 'front-end / src / auth.js' file the url of your endpoint to which you will make the requests with vuejs. Remember that if you want to receive the password reset email you must have a valid smtp server configured
-
-12. Create the views to use the routes previously created through the api and thus be able to log, register and recover accounts
+       Para ello modificaremos el fichero "public-dev/vite.config.ts", todas las modificaciones han sido comentadas para comprenderlas

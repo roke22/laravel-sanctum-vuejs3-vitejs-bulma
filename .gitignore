@@ -1,5 +1,7 @@
 /node_modules
-/public/*
+/public/build
+/public/hot
+/public/storage
 /storage/*.key
 /vendor
 .env
@@ -7,28 +9,10 @@
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
+auth.json
 npm-debug.log
 yarn-error.log
-
-front-end/.DS_Store
-front-end/node_modules
-front-end/dist
-
-# local env files
-front-end/.env.local
-front-end/.env.*.local
-
-# Log files
-front-end/npm-debug.log*
-front-end/yarn-debug.log*
-front-end/yarn-error.log*
-front-end/pnpm-debug.log*
-
-# Editor directories and files
-front-end/.idea
-front-end/.vscode
-front-end/*.suo
-front-end/*.ntvs*
-front-end/*.njsproj
-front-end/*.sln
-front-end/*.sw?
+/.idea
+/.vscode
+.php-cs-fixer.cache
+/public
