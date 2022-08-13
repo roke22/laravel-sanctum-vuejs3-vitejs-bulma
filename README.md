@@ -1,5 +1,22 @@
 # Laravel 9 + Sanctum + Vuejs 3 + TS + Vite + Bulma.io
 
+## How to install?
+    1. Clone the project
+    2. In root folder run "composer install"
+    3. In "public-dev" folder run "npm install"
+    4. In "public-dev" folder run "npm run dev" to start develpment server or 
+       "npm run build" to build the frontend in "public" folder
+
+## Views
+
+    You have a unique view where you can:
+        - Log in: Use the POST "/api/login" route and the 
+          "app\Http\Controllers\Auth\LoginController" with "login" method
+        - Get User: Protected route that show the information about the user, 
+          use the GET "/api/user" route.
+        - Log out: Use the GET "/api/logout" route to logout with the 
+          "app\Http\Controllers\Auth\LoginController" with "logout" method
+
 ## What packages have been used?
 ## Backend
 ### Laravel 9 https://laravel.com/
@@ -70,6 +87,22 @@
 # SPANISH
 
 # Laravel 9 + Sanctum + Vuejs 3 + TS + Vite + Bulma.io 
+
+## ¿Como lo instalo?
+    1. Clona el proyecto
+    2. En el directorio raiz ejecuta "composer install"
+    3. En la carpeta "public-dev" ejecuta "npm install"
+    4. En la carpeta "public-dev" ejecuta "npm run dev" para levantar el servidor 
+       de desarrollo o "npm run build" para hacer el build en la carpeta raiz "public" 
+
+## Vistas
+    Tienes una unica vista en la que puedes:
+        - Log in: Usa el metodo POST de la ruta "/api/login" que usa el controlador
+          "app\Http\Controllers\Auth\LoginController" con el metodo "login"
+        - Obtener usuario: Es una ruta protegida que usa el metodo GET de la ruta 
+          "/api/user" para obtener la informacion del usuario
+        - Log out: Usa el metodo GET de la ruta "/api/logout" que usa el controlador
+          "app\Http\Controllers\Auth\LoginController" con el metodo "logout"
 
 ## ¿ Que paquetes se han utilizado ?
 ## Backend
