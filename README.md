@@ -6,8 +6,8 @@
     PHP Framework that made easy the development
 ### Laravel Sanctum https://laravel.com/docs/9.x/sanctum
 
-    Laravel Sanctum provides a featherweight authentication system for SPAs (single page applications),
-    mobile applications, and simple, token based APIs
+    Laravel Sanctum provides a featherweight authentication system for SPAs 
+    (single page applications), mobile applications, and simple, token based APIs
     
 ## Frontend
 
