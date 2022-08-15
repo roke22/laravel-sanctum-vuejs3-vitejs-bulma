@@ -69,15 +69,15 @@ function notifyErrores(errors: any) {
 </script>
 
 <template>
-    <div>
-        <div class="columns">
+    <div class="mt-5">
+        <div class="columns is-centered has-text-centered">
             <div class="column">
                 <h1 class="title">Laravel + Sanctum Login Example</h1>
             </div>
         </div>
 
-        <div class="columns">
-            <div class="column">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-6">
                 <div class="field">
                     <p class="control has-icons-left has-icons-right">
                         <input class="input" type="email" placeholder="Email" v-model="email">
@@ -121,7 +121,7 @@ function notifyErrores(errors: any) {
                         <h1 class="title">Response output</h1>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card p-6">
                     <div class="card-content">
                         <div class="content">
                             <!-- Result get user from api -->
